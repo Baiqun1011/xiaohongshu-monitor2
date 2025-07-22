@@ -99,20 +99,25 @@ async function resolveShortUrl(shortUrl) {
     console.log('开始解析短链接:', shortUrl);
 
     const browser = await puppeteer.launch({
-        headless: 'new', // 使用新的无头模式
+        headless: 'new',
+        protocolTimeout: 60000, // 增加协议超时时间
         args: [
             '--no-sandbox',
             '--disable-setuid-sandbox',
             '--disable-dev-shm-usage',
-            '--disable-blink-features=AutomationControlled', // 隐藏自动化标识
+            '--disable-gpu',
+            '--disable-web-security',
             '--disable-features=VizDisplayCompositor',
-            '--disable-extensions',
             '--no-first-run',
-            '--disable-default-apps',
+            '--no-zygote',
+            '--single-process',
+            '--disable-extensions',
             '--disable-background-timer-throttling',
             '--disable-backgrounding-occluded-windows',
-            '--disable-renderer-backgrounding'
-        ]
+            '--disable-renderer-backgrounding',
+            '--memory-pressure-off'
+        ],
+        executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined
     });
 
     try {
@@ -279,9 +284,24 @@ async function scrapeProductData(url) {
 
     const browser = await puppeteer.launch({
         headless: 'new',
-        args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
-        // 尝试使用系统安装的Chrome
-        executablePath: process.env.CHROME_PATH || undefined
+        protocolTimeout: 60000, // 增加协议超时时间
+        args: [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-dev-shm-usage',
+            '--disable-gpu',
+            '--disable-web-security',
+            '--disable-features=VizDisplayCompositor',
+            '--no-first-run',
+            '--no-zygote',
+            '--single-process',
+            '--disable-extensions',
+            '--disable-background-timer-throttling',
+            '--disable-backgrounding-occluded-windows',
+            '--disable-renderer-backgrounding',
+            '--memory-pressure-off'
+        ],
+        executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || process.env.CHROME_PATH || undefined
     });
 
     try {
