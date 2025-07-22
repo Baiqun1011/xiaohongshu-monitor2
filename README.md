@@ -22,7 +22,7 @@
 
 ```bash
 # 克隆项目
-git clone https://github.com/YOUR_USERNAME/xiaohongshu-monitor.git
+git clone https://github.com/Baiqun1011/xiaohongshu-monitor.git
 cd xiaohongshu-monitor
 
 # 安装依赖
