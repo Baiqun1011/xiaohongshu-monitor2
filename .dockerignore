@@ -1,0 +1,16 @@
+node_modules
+npm-debug.log
+.git
+.gitignore
+README.md
+.env
+.nyc_output
+coverage
+.nyc_output
+.vscode
+*.bat
+*.md
+debug_screenshot.png
+backup_*
+.DS_Store
+Thumbs.db
