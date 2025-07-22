@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小红书商品销量监控系统</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>小红书商品销量监控系统</h1>
+            <p class="subtitle">实时监控竞品销量变化，助力商业决策</p>
+        </header>
+
+        <div class="add-product-section">
+            <div class="input-tabs">
+                <button class="tab-btn active" onclick="switchTab('single')">单个添加</button>
+                <button class="tab-btn" onclick="switchTab('batch')">批量添加</button>
+            </div>
+            
+            <div id="singleTab" class="tab-content active">
+                <div class="input-group">
+                    <input type="text" id="productUrl" placeholder="请输入小红书商品链接..." class="url-input">
+                    <button onclick="addProduct()" class="btn btn-primary">添加商品</button>
+                    <button onclick="refreshAllData()" class="btn btn-secondary">刷新所有数据</button>
+                </div>
+            </div>
+            
+            <div id="batchTab" class="tab-content">
+                <div class="batch-input-group">
+                    <textarea id="batchUrls" placeholder="请输入多个小红书商品链接，每行一个链接..." class="batch-textarea"></textarea>
+                    <div class="batch-buttons">
+                        <button onclick="addBatchProducts()" class="btn btn-primary">批量添加</button>
+                        <button onclick="clearBatchInput()" class="btn btn-secondary">清空</button>
+                    </div>
+                </div>
+                <div id="batchProgress" class="batch-progress" style="display: none;">
+                    <div class="progress-bar">
+                        <div id="progressFill" class="progress-fill"></div>
+                    </div>
+                    <div id="progressText" class="progress-text">正在处理...</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <div class="sort-controls">
+                <label>排序方式：</label>
+                <select id="sortBy" onchange="sortTable()">
+                    <option value="id">添加时间</option>
+                    <option value="price">商品价格</option>
+                    <option value="product_total_sales">商品总销量</option>
+                    <option value="daily_product_sales">商品日销量</option>
+                    <option value="daily_gmv">商品日GMV</option>
+                    <option value="shop_total_sales">店铺总销量</option>
+                    <option value="daily_shop_sales">店铺日销量</option>
+                </select>
+                <select id="sortOrder" onchange="sortTable()">
+                    <option value="desc">降序</option>
+                    <option value="asc">升序</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table id="productsTable" class="products-table">
+                <thead>
+                    <tr>
+                        <th>商品名称</th>
+                        <th>商品价格</th>
+                        <th>商品总销量</th>
+                        <th>商品日销量</th>
+                        <th>商品日GMV</th>
+                        <th>店铺名称</th>
+                        <th>店铺总销量</th>
+                        <th>店铺日销量</th>
+                        <th>最后更新时间</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody id="productsTableBody">
+                    <!-- 数据将通过JavaScript动态加载 -->
+                </tbody>
+            </table>
+        </div>
+
+        <div id="loading" class="loading" style="display: none;">
+            <div class="spinner"></div>
+            <p>正在处理中...</p>
+        </div>
+
+        <div id="message" class="message" style="display: none;"></div>
+    </div>
+
+    <!-- 销量趋势图模态框 -->
+    <div id="trendModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="trendTitle">商品销量趋势</h2>
+                <span class="close" onclick="closeTrendModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="chart-container">
+                    <canvas id="trendChart"></canvas>
+                </div>
+                <div class="trend-info">
+                    <div class="trend-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">总销量：</span>
+                            <span id="totalSales" class="stat-value">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">平均日销量：</span>
+                            <span id="avgDailySales" class="stat-value">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">最高日销量：</span>
+                            <span id="maxDailySales" class="stat-value">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">监控天数：</span>
+                            <span id="monitorDays" class="stat-value">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
