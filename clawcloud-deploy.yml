@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: xiaohongshu-monitor
-        image: baiqun1011/rxiaohongshu-monitor2:latest
+        image: baiqunfan/rxiaohongshu-monitor2:latest
         ports:
         - containerPort: 3000
         env:
