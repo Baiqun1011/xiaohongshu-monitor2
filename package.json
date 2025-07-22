@@ -1,0 +1,28 @@
+{
+  "name": "xiaohongshu-monitor",
+  "version": "2.0.0",
+  "description": "小红书商品销量监控系统",
+  "main": "server_simple.js",
+  "scripts": {
+    "start": "node server_simple.js",
+    "dev": "node server_simple.js",
+    "fix-names": "node fix_product_names.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "xiaohongshu",
+    "monitor",
+    "sales",
+    "tracking"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "puppeteer": "^21.0.0",
+    "node-cron": "^3.0.2"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
