@@ -1,7 +1,7 @@
 # 小红书商品销量监控系统 v2.0
 
-[![Build Status](https://github.com/Baiqun1011/rxiaohongshu-monitor2/workflows/Build%20and%20Deploy%20to%20Docker%20Hub/badge.svg)](https://github.com/Baiqun1011/rxiaohongshu-monitor2/actions)
-[![Docker Pulls](https://img.shields.io/docker/pulls/baiqun1011/rxiaohongshu-monitor2)](https://hub.docker.com/r/baiqun1011/rxiaohongshu-monitor2)
+[![Build Status](https://github.com/baiqunfan/rxiaohongshu-monitor2/workflows/Build%20and%20Deploy%20to%20Docker%20Hub/badge.svg)](https://github.com/baiqunfan/rxiaohongshu-monitor2/actions)
+[![Docker Pulls](https://img.shields.io/docker/pulls/baiqunfan/rxiaohongshu-monitor2)](https://hub.docker.com/r/baiqunfan/rxiaohongshu-monitor2)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 一个功能强大的小红书商品销量监控系统，支持自动数据采集、趋势分析和云端部署。
