@@ -1,0 +1,79 @@
+# ClawCloud 部署配置文件
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: xiaohongshu-monitor
+  labels:
+    app: xiaohongshu-monitor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: xiaohongshu-monitor
+  template:
+    metadata:
+      labels:
+        app: xiaohongshu-monitor
+    spec:
+      containers:
+      - name: xiaohongshu-monitor
+        image: baiqun1011/rxiaohongshu-monitor2:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: TZ
+          value: "Asia/Shanghai"
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 3000
+          initialDelaySeconds: 60
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 3000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        volumeMounts:
+        - name: data-volume
+          mountPath: /app/data
+      volumes:
+      - name: data-volume
+        persistentVolumeClaim:
+          claimName: xiaohongshu-data-pvc
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: xiaohongshu-monitor-service
+spec:
+  selector:
+    app: xiaohongshu-monitor
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: LoadBalancer
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: xiaohongshu-data-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
